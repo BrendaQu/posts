@@ -1,9 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import PostFeed from './components/PostFeed';
 
 function App() {
   return (
     <div className="App">
+      <PostFeed />
     </div>
   );
 }
