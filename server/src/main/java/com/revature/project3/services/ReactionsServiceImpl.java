@@ -23,14 +23,15 @@ public class ReactionsServiceImpl implements ReactionsService {
 
     @Override
     public Reaction getReactionByPostId(Long postId) {
-        return repository.findByPostId(postId);
+        //return repository.findByPostId(postId);
+        return null;
     }
 
     @Override
     public Reaction updateReaction(Reaction reaction, Long reactionId) {
-        Reaction reaction1 = repository.findById(reactionId).get();
-        reaction1.setReaction(reaction.getReaction());
-        return repository.save(reaction);
+        Reaction updateReaction = repository.findById(reactionId).get();
+        updateReaction.setReaction(reaction.getReaction());
+        return repository.save(updateReaction);
     }
 
     @Override
