@@ -35,7 +35,8 @@ public class ReactionsServiceImpl implements ReactionsService {
     }
 
     @Override
-    public void deleteReaction(Long reactionId) {
+    public String deleteReaction(Long reactionId) {
         repository.deleteById(reactionId);
+        return ("Entry Successfully Deleted");
     }
 }
