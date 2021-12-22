@@ -2,18 +2,20 @@ package com.revature.project3.services;
 
 import com.revature.project3.entities.Comment;
 import com.revature.project3.entities.Post;
-import com.revature.project3.repositories.PostRepository;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 public class CommentServiceTest {
 
     @Autowired
@@ -41,11 +43,14 @@ public class CommentServiceTest {
         comment.setDescription("This is a new comment");
         comment.setDate(new Date());
         comment = commentService.addComment(comment, postId);
+        assertEquals("This is a new comment", comment.getDescription());
+        assertNotNull(comment.getId());
         Comment comment_db = commentService.findById(comment.getId());
-        assertEquals("This is a new comment", comment_db.getDescription());
+        assertNotNull(comment_db);
     }
 
     @Test
+    @Transactional
     // test getting comments for a specific post:
     void testGetCommentsForPost() {
         // assign 3 comments to a given post:
@@ -67,13 +72,22 @@ public class CommentServiceTest {
     }
 
     @Test
+    @Transactional
     // test deleting comment
     void testDeleteComment() {
         Comment comment = new Comment();
         comment.setDescription("New description");
         comment.setDate(new Date());
         Comment comment_db = commentService.addComment(comment, postId);
-        commentService.deleteComment(comment_db.getId());
+        Long commentIdToDelete = comment_db.getId();
+        assertNotNull(commentIdToDelete);
+        commentService.deleteComment(commentIdToDelete);
+        try {
+            Comment phantomComment = commentService.findById(commentIdToDelete);
+        } catch (Exception e) {
+            // make sure we can't retrieve this item:
+            assertEquals(JpaObjectRetrievalFailureException.class, e.getClass());
+        }
         
 
     }

@@ -3,6 +3,7 @@ package com.revature.project3.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Entity
+@ToString
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
