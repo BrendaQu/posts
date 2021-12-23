@@ -43,6 +43,7 @@ public class CommentServiceTest {
         Comment comment = new Comment();
         comment.setDescription("This is a new comment");
         comment.setDate(new Date());
+        comment.setAuthor("William Shakespeare");
         comment = commentService.addComment(comment, postId);
         assertEquals("This is a new comment", comment.getDescription());
         assertNotNull(comment.getId());
@@ -64,6 +65,9 @@ public class CommentServiceTest {
         comment1.setDate(new Date());
         comment2.setDate(new Date());
         comment3.setDate(new Date());
+        comment1.setAuthor("William Shakespeare");
+        comment2.setAuthor("William Shakespeare");
+        comment3.setAuthor("William Shakespeare");
         commentService.addComment(comment1, postId);
         commentService.addComment(comment2, postId);
         commentService.addComment(comment3, postId);
@@ -79,6 +83,7 @@ public class CommentServiceTest {
         Comment comment = new Comment();
         comment.setDescription("New description");
         comment.setDate(new Date());
+        comment.setAuthor("William Shakespeare");
         Comment comment_db = commentService.addComment(comment, postId);
         Long commentIdToDelete = comment_db.getId();
         assertNotNull(commentIdToDelete);

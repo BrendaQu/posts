@@ -26,6 +26,8 @@ public class Comment implements Comparable<Comment> {
     // data when this comment was posted:
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date date;
+    // the user who created this comment:
+    private String author;
 
 
     @Override
