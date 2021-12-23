@@ -26,6 +26,9 @@ public class Post {
 
     private Date creationDate;
 
+    private long upmints;
+    private long downmints;
+
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_comments")
     private List<Comment> commentList;

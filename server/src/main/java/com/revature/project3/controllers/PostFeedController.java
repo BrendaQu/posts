@@ -41,6 +41,6 @@ public class PostFeedController {
 
     @GetMapping("/postfeed/datesearch/after/{date}")
     public List<Post> getPostsByDateAfter(@PathVariable("date") Date benchmark){
-        return feedService.getAllPostsBefore(benchmark);
+        return feedService.getAllPostsAfter(benchmark);
     }
 }
