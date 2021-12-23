@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -20,6 +21,7 @@ public class Post {
     private String title;
     private String description;
     private String img;
+    private Date creationDate;
 
     //private List<Comment> commentList;
    // private List<Reaction> reactionList;
