@@ -5,10 +5,12 @@ import com.revature.project3.repositories.PostFeedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class PostFeedServiceImpl implements PostFeedService{
+
 
     @Autowired
     private PostFeedRepository feedRepository;
@@ -26,5 +28,20 @@ public class PostFeedServiceImpl implements PostFeedService{
     @Override
     public List<Post> getAllPostsByOwner(long user_id) {
         return feedRepository.findByUserID(user_id);
+    }
+
+    @Override
+    public List<Post> getAllPostsBefore(Date bench) {
+        return feedRepository.findByDateBefore(bench);
+    }
+
+    @Override
+    public List<Post> getAllPostsAfter(Date bench) {
+        return feedRepository.findByDateAfter(bench);
+    }
+
+    @Override
+    public List<Post> getAllPostsContaining(String searchString) {
+        return feedRepository.findByContentContaining(searchString);
     }
 }

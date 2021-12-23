@@ -3,6 +3,7 @@ package com.revature.project3.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Data
 @Entity
 public class Post {
@@ -21,6 +23,8 @@ public class Post {
     private String title;
     private String description;
     private String img;
+
+    private Date creationDate;
 
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_comments")
