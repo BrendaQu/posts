@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -44,7 +45,9 @@ public class CommentServiceImpl implements CommentService{
     @Transactional
     public List<Comment> getCommentsForPost(Long postId) {
         Post post_db = postRepository.getById(postId);
-        return post_db.getCommentList();
+        List<Comment> commentList = post_db.getCommentList();
+        Collections.sort(commentList);
+        return commentList;
     }
 
     @Override

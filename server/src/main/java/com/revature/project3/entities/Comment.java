@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Comparator;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -17,7 +18,7 @@ import java.util.Date;
 @Data
 @Entity
 @ToString
-public class Comment {
+public class Comment implements Comparable<Comment> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,4 +26,10 @@ public class Comment {
     // data when this comment was posted:
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date date;
+
+
+    @Override
+    public int compareTo(Comment other) {
+        return this.date.compareTo(other.getDate());
+    }
 }
