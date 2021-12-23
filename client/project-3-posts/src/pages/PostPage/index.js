@@ -1,9 +1,13 @@
 import React from 'react'
-import ReactButton from '../../components/Button/ReactButton'
+import ReactButton from '../../components/ReactButton/ReactButton'
+import ReactCounter from '../../components/ReactCounter/ReactCounter';
 
 const PostPage = () => {
     return(
-        <ReactButton />
+        <div>
+            <ReactButton />
+            <ReactCounter />
+        </div>
     )
 }
 
