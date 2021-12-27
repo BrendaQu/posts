@@ -2,11 +2,16 @@ package com.revature.project3.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
+
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Data
 @Entity
 public class Reaction {
     @Id
@@ -28,35 +33,5 @@ public class Reaction {
 
     private int reaction;
 
-    public Long getReactionId() {
-        return reactionId;
-    }
-
-    public void setReactionId(Long reactionId) {
-        this.reactionId = reactionId;
-    }
-
-//    public Long getPostId() {
-//        return postId;
-//    }
-//
-//    public void setPostId(Long postId) {
-//        this.postId = postId;
-//    }
-//
-//    public Long getUserId() {
-//        return userId;
-//    }
-//
-//    public void setUserId(Long userId) {
-//        this.userId = userId;
-//    }
-
-    public int getReaction() {
-        return reaction;
-    }
-
-    public void setReaction(int reaction) {
-        this.reaction = reaction;
-    }
+   
 }

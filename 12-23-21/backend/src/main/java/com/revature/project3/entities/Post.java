@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -24,8 +23,8 @@ public class Post {
     private String title;
     private String description;
     private String img;
-    private Date creationDate;
 
+    private Date creationDate;
 
     private long upmints;
     private long downmints;
