@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
 
@@ -19,17 +20,17 @@ public class Reaction {
     @Column(name = "reaction_id")
     private Long reactionId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "post_id")
-    //private Long postId;
+    //@ManyToOne(cascade = CascadeType.MERGE)
+    //@JoinColumn(name = "reactions_post")
+    private Long postId;
 
 //    @ManyToOne
 //    @JoinColumn(name = "comment_id")
 //    private Long commentId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-    //private Long userId;
+//    @ManyToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "reactions_user")
+//    private User userId;
 
     private int reaction;
 
