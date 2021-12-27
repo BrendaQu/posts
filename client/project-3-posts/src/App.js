@@ -7,8 +7,8 @@ function App() {
   return (
     <div className="App">
       <PostPage/>
-      <PostFeed />
-      <CommentTest/>
+      {/* <PostFeed />
+      <CommentTest/> */}
     </div>
   );
 }

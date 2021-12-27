@@ -1,5 +1,5 @@
 import React from 'react'
-import ReactButton from '../../components/Button/ReactButton'
+import ReactButton from '../../components/ReactButton/ReactButton'
 import LikeDislike from '../../components/Like_Dislike';
 
 const PostPage = () => {

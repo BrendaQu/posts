@@ -1,33 +1,56 @@
-import React from 'react'
+import React, { useState } from "react";
 
 function LikeDislike() {
 
-    let like;
-    let numLikes = 100;
+    const [postLikes, setPostLikes] = useState({
+        numLikes: 100,
+        disableLike: false,
+        disableDislike: false,
+    });
+
     function onClickHandler(event){
-        if(like === undefined){
-            like = event.target.value;
-            if(like === "like"){
-                numLikes += 1;
-            }else{
-                numLikes -= 1;
-            }
-        }else{
-            like = event.target.value;
-            if(like === "like"){
-                numLikes += 2;
-            }else{
-                numLikes -=2;
-            }
+        if(event.target.value === "like" && !postLikes.disableDislike){
+            setPostLikes({
+                numLikes: (postLikes.numLikes + 1),
+                disableLike: true,
+            })
+        }else if(event.target.value === "dislike" && !postLikes.disableLike){
+            setPostLikes({
+                numLikes: (postLikes.numLikes - 1),
+                disableDislike: true,
+            })
+        }else if(event.target.value === "like" && postLikes.disableDislike){
+            setPostLikes({
+                numLikes: (postLikes.numLikes + 2),
+                disableLike: true,
+            })
+        }else if(event.target.value === "dislike" && postLikes.disableLike){
+            setPostLikes({
+                numLikes: (postLikes.numLikes - 2),
+                disableDislike: true,
+            })
+        }else if(event.target.value === "cancel" && postLikes.disableLike){
+            setPostLikes({
+                numLikes: (postLikes.numLikes - 1),
+                disableLike: false,
+            })
+        }else if(event.target.value === "cancel" && postLikes.disableDislike){
+            setPostLikes({
+                numLikes: (postLikes.numLikes + 1),
+                disableDislike: false,
+            })
         }
-        console.log(numLikes)
     }
+
+    const element = (<button onClick={onClickHandler} value="cancel">Remove Reaction</button>)
 
     return (
         <div>
-            <button onClick={onClickHandler} value="like">Like</button>
-            <button onClick={onClickHandler} value="dislike">Dislike</button><br/>
-            <div>{numLikes}</div>
+            <button onClick={onClickHandler} value="like" disabled={postLikes.disableLike}>Like</button>
+            {postLikes.disableDislike? element : ""}
+            {postLikes.disableLike? element : ""}
+            <button onClick={onClickHandler} value="dislike" disabled={postLikes.disableDislike}>Dislike</button><br/>
+            <div>{postLikes.numLikes}</div>
         </div>
     )
 }
