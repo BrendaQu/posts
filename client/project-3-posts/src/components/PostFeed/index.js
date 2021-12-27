@@ -91,7 +91,8 @@ const PostFeed = () => {
         //Set up the date using today
         let pastDate = new Date(Date.now() - (numDays * 24 * 60 * 60 * 1000)); //Go from ms to days
         //Check days prior
-        axios.get(`http://localhost:11001/postfeed/datesearch/after/${pastDate}`) //Get all the post occurring after this date.
+        console.log(pastDate.toISOString());
+        axios.get(`http://localhost:11001/postfeed/datesearch/after/${pastDate.toISOString()}`) //Get all the post occurring after this date.
         .then((resp) => {
             setPosts(resp.data);
         })
@@ -135,7 +136,7 @@ const PostFeed = () => {
 
         switch (filterMethod) {
             case "BEFORE":
-                axios.get(`http://localhost:11001/postfeed/datesearch/before/${benchmarkDate}`)
+                axios.get(`http://localhost:11001/postfeed/datesearch/before/${benchmarkDate.toISOString()}`)
                     .then((resp) => {
                         setPosts(resp.data);
                     })
@@ -144,7 +145,7 @@ const PostFeed = () => {
                     });
                 break;
             case "AFTER":
-                axios.get(`http://localhost:11001/postfeed/datesearch/after/${benchmarkDate}`)
+                axios.get(`http://localhost:11001/postfeed/datesearch/after/${benchmarkDate.toISOString()}`)
                     .then((resp) => {
                         setPosts(resp.data);
                     })
