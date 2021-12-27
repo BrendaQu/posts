@@ -59,21 +59,23 @@ public class CommentServiceImpl implements CommentService{
 
     @Override
     @Transactional
-    public void deleteComment(Long id) {
-        commentRepository.deleteById(id);
+    public Comment deleteComment(Long id) {
+        Comment comment_db = commentRepository.getById(id);
+        comment_db.setDescription("Comment was deleted.");
+        return commentRepository.save(comment_db);
     }
 
     @Override
     public Comment reply(Long postId, Long parentId, Comment child) {
-        Comment parent_db = commentRepository.findById(parentId).get();
-
-        // first, update post db:
+        // set this comment's parent as the parent id:
         child.setParentComment(parentId);
+        // update the repository:
         return addComment(child, postId);
     }
 
     @Override
     public List<Comment> getReplies(Long commentId) {
+        // return all replies to the current comment:
         return commentRepository.findByParentComment(commentId);
     }
 }

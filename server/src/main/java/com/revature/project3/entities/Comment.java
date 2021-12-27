@@ -29,6 +29,9 @@ public class Comment implements Comparable<Comment> {
     // the user who created this comment:
     private String author;
 
+    // the id of the comment which this comment is a reply to
+    // this value will be null if it is it a top-level comment
+    // (no parent)
     private Long parentComment;
 
 

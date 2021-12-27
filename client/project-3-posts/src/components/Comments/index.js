@@ -22,9 +22,9 @@ const Comments = (props) => {
     }, [])
     
     return (
-        <div>
-            {comments.map(comment => <Comment comment={comment} comments = {comments} setComments = {setComments} key={comment.id}/>)}
+        <div style = {{border: 'solid', width: '75%', margin: 'auto', textAlign: 'left', padding: '10px'}}>
             <AddComment postId = {props.post.id} comments = {comments} setComments = {setComments}/>
+            {comments.map(comment => <Comment  postId = {props.post.id} comment={comment} comments = {comments} setComments = {setComments} key={comment.id}/>)}
         </div>
     )
 }
