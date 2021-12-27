@@ -15,6 +15,7 @@ import java.util.List;
 @Entity
 public class Post {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     // TODO, reach out to user team and figure out mapping:
     private Long userId;
@@ -23,7 +24,9 @@ public class Post {
     private String img;
     private Date creationDate;
 
-    //private List<Comment> commentList;
-   // private List<Reaction> reactionList;
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "post_fk", referencedColumnName="id")
+    private List<Comment> commentList;
+//    private List<Reaction> reactionList;
     // private List<Tag> tagList;
 }
