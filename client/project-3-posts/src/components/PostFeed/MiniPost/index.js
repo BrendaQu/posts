@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Post = (props) => {
+const MiniPost = (props) => {
 
 
     let prettyDate = new Date(props.data.creationDate);
@@ -20,4 +20,4 @@ const Post = (props) => {
 
 }
 
-export default Post;
+export default MiniPost;

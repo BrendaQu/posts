@@ -7,6 +7,7 @@ import lombok.ToString;
 
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class Post {
     private String title;
     private String description;
     private String img;
-    private Date creationDate;
+    private LocalDateTime creationDate;
 
 
     private long upmints;

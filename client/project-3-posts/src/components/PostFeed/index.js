@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import Post from './Post';
+import MiniPost from './MiniPost';
 
 const PostFeed = () => {
 
@@ -275,7 +275,7 @@ const PostFeed = () => {
                     <ol>
                         {
                             posts.map(post => {
-                                return <li key={post.id}><Post data={post} /></li>
+                                return <li key={post.id}><MiniPost data={post} /></li>
                             })
                         }
                     </ol>
