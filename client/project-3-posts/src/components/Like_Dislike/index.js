@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import mintUp from "../../imgs/mintUp.png"
+import mintDown from "../../imgs/mintDown.png"
 
 function LikeDislike() {
 
     const [postLikes, setPostLikes] = useState({
-        numLikes: 100,
+        numLikes: 0,
         disableLike: false,
         disableDislike: false,
     });
@@ -42,14 +44,15 @@ function LikeDislike() {
         }
     }
 
-    const element = (<button onClick={onClickHandler} value="cancel">Remove Reaction</button>)
+    const element = (<button onClick={onClickHandler} value="cancel">---</button>)
 
     return (
         <div>
-            <button onClick={onClickHandler} value="like" disabled={postLikes.disableLike}>Like</button>
+            
+            <input height="75" type="image" onClick={onClickHandler} value="like" disabled={postLikes.disableLike} src={mintUp} /><br/>
+            <input height="75" type="image" onClick={onClickHandler} value="dislike" disabled={postLikes.disableDislike} src={mintDown}/><br/>
             {postLikes.disableDislike? element : ""}
             {postLikes.disableLike? element : ""}
-            <button onClick={onClickHandler} value="dislike" disabled={postLikes.disableDislike}>Dislike</button><br/>
             <div>{postLikes.numLikes}</div>
         </div>
     )
