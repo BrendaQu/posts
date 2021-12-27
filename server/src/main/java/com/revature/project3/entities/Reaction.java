@@ -28,9 +28,12 @@ public class Reaction {
 //    @JoinColumn(name = "comment_id")
 //    private Long commentId;
 
+
 //    @ManyToOne(cascade = CascadeType.MERGE)
 //    @JoinColumn(name = "reactions_user")
-//    private User userId;
+
+    private Long userId;
+
 
     private int reaction;
 

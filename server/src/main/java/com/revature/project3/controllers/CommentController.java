@@ -1,4 +1,4 @@
-package com.revature.project3.controller;
+package com.revature.project3.controllers;
 
 import com.revature.project3.entities.Comment;
 import com.revature.project3.services.CommentService;

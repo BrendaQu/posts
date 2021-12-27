@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReactionsRepository extends JpaRepository<Reaction, Long> {
-    //@Query("select r from Reaction r where r.postId = ?1")
+    @Query("select r from Reaction r where r.postId = ?1")
     Reaction findByPostId(Long postId);
     //Reaction findReactionByReactionId(Long reactionId);
 }
