@@ -3,19 +3,20 @@ package com.revature.project3.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Data
 @Entity
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     // TODO, reach out to user team and figure out mapping:
     private Long userId;
@@ -24,9 +25,15 @@ public class Post {
     private String img;
     private Date creationDate;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_fk", referencedColumnName="id")
+    private long upmints;
+    private long downmints;
+
+    @OneToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "post_comments")
     private List<Comment> commentList;
-//    private List<Reaction> reactionList;
+
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "post_reactions")
+    private List<Reaction> reactionList;
     // private List<Tag> tagList;
 }
