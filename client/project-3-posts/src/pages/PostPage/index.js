@@ -1,9 +1,13 @@
 import React from 'react'
 import ReactButton from '../../components/Button/ReactButton'
+import LikeDislike from '../../components/Like_Dislike';
 
 const PostPage = () => {
-    return(
-        <ReactButton />
+    return (
+        <div>
+            <ReactButton />
+            <LikeDislike />
+        </div>
     )
 }
 
