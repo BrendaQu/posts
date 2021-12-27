@@ -23,6 +23,7 @@ public class Post {
     private String title;
     private String description;
     private String img;
+
     private Date creationDate;
 
     private long upmints;
