@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,13 +46,34 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> getCommentsForPost(Long postId) {
         Post post_db = postRepository.getById(postId);
         List<Comment> commentList = post_db.getCommentList();
-        Collections.sort(commentList);
-        return commentList;
+        List<Comment> temp = new ArrayList<>();
+        // We only want comments whose parents are null:
+        for(Comment comment: commentList) {
+            if(comment.getParentComment() == null) {
+                temp.add(comment);
+            }
+        }
+        Collections.sort(temp);
+        return temp;
     }
 
     @Override
     @Transactional
     public void deleteComment(Long id) {
         commentRepository.deleteById(id);
+    }
+
+    @Override
+    public Comment reply(Long postId, Long parentId, Comment child) {
+        Comment parent_db = commentRepository.findById(parentId).get();
+
+        // first, update post db:
+        child.setParentComment(parentId);
+        return addComment(child, postId);
+    }
+
+    @Override
+    public List<Comment> getReplies(Long commentId) {
+        return commentRepository.findByParentComment(commentId);
     }
 }

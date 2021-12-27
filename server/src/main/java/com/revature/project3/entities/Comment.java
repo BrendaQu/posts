@@ -7,13 +7,11 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -30,6 +28,8 @@ public class Comment implements Comparable<Comment> {
     private Date date;
     // the user who created this comment:
     private String author;
+
+    private Long parentComment;
 
 
     @Override

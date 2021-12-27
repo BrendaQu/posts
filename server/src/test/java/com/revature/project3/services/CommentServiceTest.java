@@ -94,8 +94,22 @@ public class CommentServiceTest {
             // make sure we can't retrieve this item:
             assertEquals(JpaObjectRetrievalFailureException.class, e.getClass());
         }
-        
+    }
 
+    @Test
+    @Transactional
+    void testReplyComment() {
+        Comment comment = new Comment();
+        comment.setDescription("Parent comment");
+        comment.setDate(new Date());
+        comment.setAuthor("Mom");
+        Comment comment_db = commentService.addComment(comment, postId);
+        Comment commentChild = new Comment();
+        commentChild.setDescription("Child comment 1");
+        commentChild.setDate(new Date());
+        commentService.reply(postId, comment_db.getId(), commentChild);
+        List<Comment> children = commentService.getReplies(comment_db.getId());
+        assertEquals(1,children.size());
     }
 
 }

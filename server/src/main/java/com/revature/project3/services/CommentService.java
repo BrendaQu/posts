@@ -11,4 +11,6 @@ public interface CommentService {
     public Comment findById(Long id);
     public List<Comment> getCommentsForPost(Long postId);
     public void deleteComment(Long id);
+    public Comment reply(Long postId, Long parentId, Comment child);
+    public List<Comment> getReplies(Long commentId);
 }
