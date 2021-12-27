@@ -21,7 +21,7 @@ public class Reaction {
 
 //    @ManyToOne
 //    @JoinColumn(name = "post_id")
-    //private Long postId;
+    private Long postId;
 
 //    @ManyToOne
 //    @JoinColumn(name = "comment_id")
@@ -29,7 +29,7 @@ public class Reaction {
 
 //    @ManyToOne
 //    @JoinColumn(name = "user_id")
-    //private Long userId;
+    private Long userId;
 
     private int reaction;
 

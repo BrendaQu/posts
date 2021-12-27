@@ -23,8 +23,8 @@ public class ReactionsServiceImpl implements ReactionsService {
 
     @Override
     public Reaction getReactionByPostId(Long postId) {
-        //return repository.findByPostId(postId);
-        return null;
+        return repository.findByPostId(postId);
+//        return null;
     }
 
     @Override
