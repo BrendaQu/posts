@@ -74,6 +74,8 @@ public class CommentServiceImpl implements CommentService{
     @Override
     public List<Comment> getReplies(Long commentId) {
         // return all replies to the current comment:
-        return commentRepository.findByParentComment(commentId);
+        List<Comment> replies = commentRepository.findByParentComment(commentId);
+        Collections.sort(replies);
+        return replies;
     }
 }

@@ -31,7 +31,7 @@ const AddComment = (props) => {
             date: Date.now()
         })
         // update the comments component:
-        .then(response => props.setComments([...props.comments, response.data]))
+        .then(response => props.setComments([response.data, ...props.comments]))
         .catch(error => console.error(error));
         // reset the input field to be empty:
         setComment("");

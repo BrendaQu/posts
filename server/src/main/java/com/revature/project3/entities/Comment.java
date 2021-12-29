@@ -37,6 +37,6 @@ public class Comment implements Comparable<Comment> {
 
     @Override
     public int compareTo(Comment other) {
-        return this.date.compareTo(other.getDate());
+        return other.getDate().compareTo(this.date);
     }
 }

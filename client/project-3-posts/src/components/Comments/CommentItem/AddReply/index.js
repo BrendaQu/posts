@@ -35,7 +35,7 @@ const AddReply = (props) => {
         .then(response => {
             console.log(response);
             setReply("");
-            props.setReplies([...props.replies, response.data]);}
+            props.setReplies([response.data, ...props.replies]);}
         )
         .catch(err => console.error(err))
     }
