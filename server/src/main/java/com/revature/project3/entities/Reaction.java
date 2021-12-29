@@ -1,5 +1,6 @@
 package com.revature.project3.entities;
 
+import com.revature.project3.utils.ReactionsEnum;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
@@ -31,11 +32,7 @@ public class Reaction {
 
 //    @ManyToOne(cascade = CascadeType.MERGE)
 //    @JoinColumn(name = "reactions_user")
-
     private Long userId;
 
-
-    private int reaction;
-
-   
+    private ReactionsEnum reaction;
 }
