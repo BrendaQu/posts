@@ -5,7 +5,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 /*
-    This component 
+    This component holds all comments for a given post.
+    It takes in a post object as a prop... mostly for the id
+    so when we add a new comment, it knows which post to associate it with.
     Example:
     <Comments post = {post}/>
 */

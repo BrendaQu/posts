@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 
-// form to add a reply to a comment:
+/* This component is a form to add a reply to a comment:
+   Each comment component has a reply form associated with it.
+*/
 const AddReply = (props) => {
 
     // reply value of input field:

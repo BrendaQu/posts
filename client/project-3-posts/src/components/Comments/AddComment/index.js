@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 
-// This comment is pretty simple... it
+/* This comment is pretty simple... it
 // is an input box with a submit button
 // that sends the comment to the database when
-// submitted.
+// submitted. */
 const AddComment = (props) => {
 
     // used to store the comment value:

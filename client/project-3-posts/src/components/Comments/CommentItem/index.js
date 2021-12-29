@@ -4,6 +4,9 @@ import {useState, useEffect} from 'react';
 import Replies from './Replies';
 import AddReply from './AddReply';
 
+/* This component is a singular comment.
+    A comment has a reply form, replies, and a delete button.
+*/
 const Comment = (props) => {
     // all current replies to this field:
     const [replies, setReplies] = useState([]);
