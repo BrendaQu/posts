@@ -7,8 +7,8 @@ const PostPage = () => {
     return (
         <div>
             <ReactButton />
-            <ReactCounter />
-            <LikeDislike />
+            {/* <ReactCounter />
+            <LikeDislike /> */}
         </div>
     )
 }
