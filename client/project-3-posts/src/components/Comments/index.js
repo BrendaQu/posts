@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 /*
+    This component 
     Example:
     <Comments post = {post}/>
 */

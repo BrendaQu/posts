@@ -26,9 +26,10 @@ const AddReply = (props) => {
             description: reply,
             date: Date.now(),
             author: author,
+            parentComment: props.commentId
         }
         // send this reply to the server
-        axios.post(`http://localhost:11001/comments/reply?postId=${props.postId}&parentId=${props.commentId}`, replyObject)
+        axios.post(`http://localhost:11001/comments/reply/${props.postId}`, replyObject)
         .then(response => {
             console.log(response);
             setReply("");

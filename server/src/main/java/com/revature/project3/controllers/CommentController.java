@@ -31,9 +31,9 @@ public class CommentController {
         return commentService.deleteComment(commentId);
     }
 
-    @PostMapping("/reply")
-    public Comment reply(@RequestParam("postId") Long postId, @RequestParam("parentId") Long parentId, @RequestBody Comment reply) {
-        return commentService.reply(postId, parentId, reply);
+    @PostMapping("/reply/{id}")
+    public Comment reply(@PathVariable("id") Long postId, @RequestBody Comment reply) {
+        return commentService.reply(postId,reply);
     }
 
     @GetMapping("/reply/{id}")

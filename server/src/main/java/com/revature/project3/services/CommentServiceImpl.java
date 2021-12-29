@@ -66,9 +66,7 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public Comment reply(Long postId, Long parentId, Comment child) {
-        // set this comment's parent as the parent id:
-        child.setParentComment(parentId);
+    public Comment reply(Long postId, Comment child) {
         // update the repository:
         return addComment(child, postId);
     }

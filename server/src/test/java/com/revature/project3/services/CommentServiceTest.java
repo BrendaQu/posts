@@ -103,7 +103,7 @@ public class CommentServiceTest {
         Comment commentChild = new Comment();
         commentChild.setDescription("Child comment 1");
         commentChild.setDate(new Date());
-        commentService.reply(postId, comment_db.getId(), commentChild);
+        commentService.reply(postId, commentChild);
         List<Comment> children = commentService.getReplies(comment_db.getId());
         assertEquals(1,children.size());
     }
