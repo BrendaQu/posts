@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
-import { BsClipboardCheck, BsClipboardX } from "react-icons/bs";
 import ReactButton from "../../ReactButton";
 import LikeDislike from "../../Like_Dislike";
-import axios from "axios";
 
-const Posts = (props) => {
+const FeedItem = (props) => {
+  // time since the post was made:
   const [timeSince, setTimeSince] = useState("");
-  const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState();
+  const [, setReactions] = useState([]);
+  // how many reactions the post has:
   const [reactionsCount, setReactionsCount] = useState({
     THUMBSUP: 0,
     THUMBSDOWN: 0,
@@ -20,18 +19,32 @@ const Posts = (props) => {
     HEART: 0
   })
 
-  const updateCount = (reaction, count) => {
-    console.log(reaction);
-    var temp = reactionsCount;
-    temp[reaction] = count;
-    console.log('temp:')
-    console.log(temp);
-    setReactionsCount(temp);
+  // update reactions count when a new reaction is made:
+  const updateCount = (updatedReactions) => {
+    var tempReactionCount = {
+      THUMBSUP: 0,
+      THUMBSDOWN: 0,
+      LAUGH: 0,
+      CRY: 0,
+      SMILE: 0,
+      FROWN: 0,
+      ANGRY: 0,
+      HEART: 0
+    }
+    for (var i = 0; i < updatedReactions.length; i++) {
+      tempReactionCount[updatedReactions[i].reaction]++;
+    }
+    // update state:
+    setReactionsCount(tempReactionCount);
+    setReactions(updatedReactions);
   }
   
 
   useEffect(() => {
 
+    setReactions(props.data.reactionList);
+
+    // when post is rendered, count how many of each reactions:
     var tempReactionCount = {
       THUMBSUP: 0,
       THUMBSDOWN: 0,
@@ -47,8 +60,10 @@ const Posts = (props) => {
     }
     setReactionsCount(tempReactionCount);
 
+    // manually add Z because MySQL drops it for some reason...
     let date = new Date(props.data.creationDate + 'Z');
 
+    // calculate time since post was made:
     const seconds = (Date.now() - date.getTime()) / 1000;
     if (seconds < 60) {
       setTimeSince(Math.floor(seconds) + " secs ago");
@@ -63,70 +78,7 @@ const Posts = (props) => {
     } else {
       setTimeSince(Math.floor(seconds / 2592000) + " months ago");
     }
-    if(props.data.commentList.length === 0){
-      setShowComments(false);
-    } else{
-      setShowComments(true);
-      setComments(props.data.commentList);
-    }
-    
-
-  },[]);
-
-  // const onShowCommentHandler = () => {
-  //   if (showComments === false) setShowComments(true);
-  //   else setShowComments(false);
-  // };
-
-  // const showCommentsHandler = (showComments) => {
-  //   switch (showComments) {
-  //     case true:
-  //       return (
-  //         <div className="row">
-  //           <div className="col-lg-10">
-  //             <h4>Comments</h4>
-  //             {comments.map((comment) => (
-  //               <Comment data={comment} />
-  //             ))}
-  //           </div>
-  //         </div>
-  //       );
-  //     case false:
-  //       return <></>;
-  //   }
-  // };
-
-  // const onPostCommentHandler = (postId) => {
-  //   const comment = {
-  //     description: commentContent,
-  //     date: Date.now(), 
-  //     author: 'user2'
-  //   }
-  //   console.log(comment)
-  //   axios.post((URL_TO_POST_COMMENT+postId), comment)
-  //   .then(response => console.log(response))
-  //   .catch(error => console.error(error));
-  // }
-
-  // const onCommentHandler = () => {
-  //   if (wantsToPost === false)
-  //     setWantsToPost(true);
-  //   else
-  //     setWantsToPost(false);
-  // }
-
-  // const loadCommentTemplate = (wantsToPost) => {
-  //   switch(wantsToPost){
-  //     case true:
-  //       return(
-  //         <div>
-  //           <textarea type="text" name="" id="" className="" width="100%" onChange={(e) => setCommentContent(e.target.value)}/>
-  //           <button className="btn btn-block" onClick={onPostCommentHandler.bind(this, props.data.id)}>submit</button>
-  //         </div>
-  //       )
-  //   }
-  // }
-
+  },[props.data]);
   
   return (
     <div>
@@ -161,34 +113,13 @@ const Posts = (props) => {
                   <ReactButton data = {props.data} counts = {reactionsCount} updateCount = {updateCount}/>
                 </div>
               </div>
-              {/* <div className="col-sm-3">
-                <a
-                  className="btn btn-secondary btn-lg btn-block"
-                  href="#"
-                  role="button"
-                  onClick={onShowCommentHandler}
-                >
-                  Show Comment
-                </a>
-              </div>
-              <div className="col-sm-3">
-                <a
-                  className="btn btn-secondary btn-lg btn-block"
-                  href="#"
-                  role="button"
-                  onClick={onCommentHandler}
-                >
-                  Post Comment
-                </a>
-              </div> */}
               {/* TODO: Route this to post item component: */}
               <div className="col-sm-3">
-                <a
+                <button
                   className="btn btn-secondary btn-lg btn-block"
-                  role="button"
                 >
                   View Full Post
-                </a>
+                </button>
               </div>
               <LikeDislike data={props.data} />
             </div>
@@ -196,12 +127,9 @@ const Posts = (props) => {
           </div>
         </div>
       </div>
-       {/* <button className="btn btn-block" onClick={onShowCommentHandler}>Post</button>  */}
       <br />
-
-      {/* <button className = "btn btn-block" onClick={testFunction}>Click me to test</button> */}
     </div>
   );
 };
 
-export default Posts;
+export default FeedItem;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { URL_PREFIX } from "../../../../url_constants";
 
 /* This comment is pretty simple... it
 // is an input box with a submit button
@@ -19,13 +20,13 @@ const AddComment = (props) => {
     // when we submit, send the comment to the database:
     const onSubmitHandler = (event) => {
         event.preventDefault();
-        if(comment == "") {
+        if(comment === "") {
             return;
         }
-        // TODO: get author's name from somewhere...
+        // TODO: get author's name from redux store
         var author = 'Anonymous';
         // send comment to the database
-        axios.post(`http://localhost:11001/comments/${props.postId}`, {
+        axios.post(`${URL_PREFIX}/comments/${props.postId}`, {
             description: comment,
             author: author,
             date: Date.now()

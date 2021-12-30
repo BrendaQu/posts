@@ -3,6 +3,7 @@ import styles from './style.module.css';
 import {useState, useEffect} from 'react';
 import Replies from './Replies';
 import AddReply from './AddReply';
+import { URL_PREFIX } from "../../../../url_constants";
 
 /* This component is a singular comment.
     A comment has a reply form, replies, and a delete button.
@@ -13,7 +14,7 @@ const Comment = (props) => {
 
     // delete comment from database:
     const deleteComment = () => {
-        axios.delete(`http://localhost:11001/comments/${props.comment.id}`)
+        axios.delete(`${URL_PREFIX}/comments/${props.comment.id}`)
         // delete comment from state:
         .then(response => {
             props.setComments(props.comments.map(comment => {
@@ -28,13 +29,12 @@ const Comment = (props) => {
 
     // get replies for this comment:
     useEffect(() => {
-        console.log("here");
         // fetch replies to this comment:
-        axios.get(`http://localhost:11001/comments/reply/${props.comment.id}`)
+        axios.get(`${URL_PREFIX}/comments/reply/${props.comment.id}`)
         // update state:
         .then(response => setReplies(response.data))
         .catch(err => console.error(err))
-    }, [])
+    }, [props.comment.id])
 
     return (
         <div className = {styles.comment}>

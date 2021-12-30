@@ -1,24 +1,27 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import { BsClipboardCheck, BsClipboardX } from "react-icons/bs";
 import axios from "axios";
+import { URL_PREFIX } from "../../url_constants";
 
-const URL_TO_POST = "http://localhost:11001/postfeed/addnew";
+const URL_TO_POST = `${URL_PREFIX}/postfeed/addnew`;
 
+/* This component allows user to create
+a new post. */
 const CreatePost = () => {
 
+    /* The state of the form. */
     const [postDescription, setPostDescription] = useState("");
     const[postTitle, setPostTitle] = useState("");
     const [postUser, setPostUser] = useState(0);
 
     useEffect(() => {
         setPostUser(1);
-    })
+    }, [])
 
+    /* Submitting the post: */
     const onPostHandler = () => {
 
         var date = new Date(Date.now());
-        console.log(date.toISOString());
 
         const postDetails = {
             userId: postUser,
@@ -30,13 +33,11 @@ const CreatePost = () => {
         }
 
         axios.post(URL_TO_POST, postDetails)
-        .then(response => console.log(response))
+        .then(response => {})
         .catch(error => console.error(error))
-
     }
 
   return (
-      
     <div className="card rounded">
       <div className="card-header">
         <div className="row">

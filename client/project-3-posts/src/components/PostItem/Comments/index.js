@@ -1,8 +1,9 @@
 import Comment from './CommentItem';
 import AddComment from './AddComment';
-
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { URL_PREFIX } from '../../../url_constants';
+
 
 /*
     This component holds all comments for a given post.
@@ -17,12 +18,13 @@ const Comments = (props) => {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
+        
         // fetch comments for this post from the database
-        axios.get(`http://localhost:11001/comments/${props.post.id}`)
+        axios.get(`${URL_PREFIX}/comments/${props.post.id}`)
         // update state:
         .then(response => setComments(response.data))
         .catch(err => console.error(err))
-    }, [])
+    }, [props.post.id])
     
     return (
         <div style = {{ margin: 'auto', textAlign: 'left', padding: '10px'}}>
