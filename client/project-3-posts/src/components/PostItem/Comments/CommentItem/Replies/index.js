@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import Comment from "../";
 
 // given a list of replies, render them:
@@ -6,7 +5,7 @@ const Replies = (props) => {
   return (
     <div>
       {props.replies.map((reply) => (
-        <div className="row">
+        <div className="row" key={reply.id}>
           <div className="col-1"></div>
           <div className="col-11">
             <Comment
@@ -14,7 +13,6 @@ const Replies = (props) => {
               comment={reply}
               comments={props.replies}
               setComments={props.setReplies}
-              key={reply.id}
             />
           </div>
         </div>

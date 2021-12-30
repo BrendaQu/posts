@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 import javax.persistence.*;
@@ -25,7 +26,10 @@ public class Post {
     private String title;
     private String description;
     private String img;
+    @DateTimeFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSSX")
     private LocalDateTime creationDate;
+    private Long upmints;
+    private Long downmints;
 
     @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_comments")

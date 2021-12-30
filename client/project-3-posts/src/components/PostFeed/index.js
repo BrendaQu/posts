@@ -1,7 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import MiniPost from './MiniPost';
+import FeedItem from './FeedItem';
+import { URL_PREFIX } from '../../url_constants';
 
+/* This component renders gruops of posts depending on user's filters
+ ex: newest, oldest, most upmints, etc...
+*/
 const PostFeed = () => {
 
     const [posts, setPosts] = useState([]);
@@ -11,9 +15,9 @@ const PostFeed = () => {
 
     useEffect(() => {
 
-        axios.get("http://localhost:11001/postfeed")
+        axios.get(`${URL_PREFIX}/postfeed`)
             .then((response) => {
-                setPosts(response.data); //Set the posts array to the filtered content
+                setPosts(response.data.reverse()); //Set the posts array to the filtered content
             })
             .catch((error) => {
                 console.error(error); //Print error to console
@@ -106,8 +110,7 @@ const PostFeed = () => {
         //Set up the date using today
         let pastDate = new Date(Date.now() - (numDays * 24 * 60 * 60 * 1000)); //Go from ms to days
         //Check days prior
-        console.log(pastDate.toISOString());
-        axios.get(`http://localhost:11001/postfeed/datesearch/after/${pastDate.toISOString()}`) //Get all the post occurring after this date.
+        axios.get(`${URL_PREFIX}/postfeed/datesearch/after/${pastDate.toISOString()}`) //Get all the post occurring after this date.
         .then((resp) => {
             setPosts(resp.data);
         })
@@ -129,7 +132,7 @@ const PostFeed = () => {
      */
     const searchSubmitHandler = (event) => { //Change the posts array on submit
         event.preventDefault(); //No page refresh
-        axios.get(`http://localhost:11001/postfeed/textsearch/${searchText}`)
+        axios.get(`${URL_PREFIX}/postfeed/textsearch/${searchText}`)
             .then((response) => {
                 setPosts(response.data); //Set the state to this new array (unsorted)
             })
@@ -143,12 +146,10 @@ const PostFeed = () => {
      */
     const dateChangeHandler = (event) => {
         const { name, value } = event.target;
-        console.log(value);
         if (name === "filter_method") {
             setFilterMethod(value);
         }
         else if (name === "filter_date") {
-            console.log(value);
             setFilterDate(value);
         }
     }
@@ -162,7 +163,7 @@ const PostFeed = () => {
 
         switch (filterMethod) {
             case "BEFORE":
-                axios.get(`http://localhost:11001/postfeed/datesearch/before/${benchmarkDate.toISOString()}`)
+                axios.get(`${URL_PREFIX}/postfeed/datesearch/before/${benchmarkDate.toISOString()}`)
                     .then((resp) => {
                         setPosts(resp.data);
                     })
@@ -171,7 +172,7 @@ const PostFeed = () => {
                     });
                 break;
             case "AFTER":
-                axios.get(`http://localhost:11001/postfeed/datesearch/after/${benchmarkDate.toISOString()}`)
+                axios.get(`${URL_PREFIX}/postfeed/datesearch/after/${benchmarkDate.toISOString()}`)
                     .then((resp) => {
                         setPosts(resp.data);
                     })
@@ -180,7 +181,7 @@ const PostFeed = () => {
                     });
                 break;
             case "ALL":
-                axios.get(`http://localhost:11001/postfeed`)
+                axios.get(`${URL_PREFIX}/postfeed`)
                     .then((resp) => {
                         setPosts(resp.data);
                     })
@@ -192,51 +193,7 @@ const PostFeed = () => {
 
                 break;
         }
-
-
-
-
     }
-
-    ////////////////////// MAKING FAKE POSTS AND USERS FOR TESTING
-    let owner1 = {
-        id: 1,
-        name: "Peter Lankton",
-        email: "p.lankton@gmail.com"
-    }
-    let post1 = {
-        id: 101,
-        title: "Chum Bucket Advertisement",
-        description: "This restaurant is simply the best.",
-        owner: owner1
-    }
-
-    let owner2 = {
-        id: 2,
-        name: "Eugene Krabs",
-        email: "krabs@gmail.com"
-    }
-    let post2 = {
-        id: 102,
-        title: "Krusty Krab 2 Advertisement",
-        description: "Hello! I like money!",
-        owner: owner2
-    }
-
-    let owner3 = {
-        id: 3,
-        name: "Spongebob Squarepants",
-        email: "square@gmail.com"
-    }
-    let post3 = {
-        id: 103,
-        title: "Krusty Krab Appreciation Post",
-        description: "The Krusty Krab is the bestest place to work!",
-        owner: owner3
-    }
-
-    let postArray = [post1, post2, post3];
-    /////////////////////////////////////
 
     /////Calculation for the default value (the current date/time) for the time input field
     const todayRaw = new Date(Date.now());
@@ -292,25 +249,20 @@ const PostFeed = () => {
             <button onClick={() => filterByTimeAgo(20)}>Last Month</button>
             <button onClick={() => filterByTimeAgo(365)}>Last Year</button>
             <div className="container d-flex justify-content-center">
-
                 {posts.length === 0 ?
 
                     <h1> It's quiet in here. Make a post!</h1>
 
                     :
                     <div className="">
-                        <ul className="list-group">
+                        <ul>
                         {
                             posts.map(post => {
-                                return <li className='' key={post.id}>
-                                    <MiniPost data={post} />
-                                </li>
+                                return <li key = {post.id}> <FeedItem data={post} /></li>
                             })
                         }
                         </ul>
                     </div>
-                    
-
                 }
             </div>
 

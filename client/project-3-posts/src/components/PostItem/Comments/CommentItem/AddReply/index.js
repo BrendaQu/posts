@@ -1,5 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { URL_PREFIX } from "../../../../../url_constants";
 
 
 /* This component is a form to add a reply to a comment:
@@ -31,9 +32,8 @@ const AddReply = (props) => {
             parentComment: props.commentId
         }
         // send this reply to the server
-        axios.post(`http://localhost:11001/comments/reply/${props.postId}`, replyObject)
+        axios.post(`${URL_PREFIX}/comments/reply/${props.postId}`, replyObject)
         .then(response => {
-            console.log(response);
             setReply("");
             props.setReplies([response.data, ...props.replies]);}
         )

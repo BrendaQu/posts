@@ -1,27 +1,25 @@
 import React, { useEffect, useState } from "react";
-import "./style.css";
-import { BsClipboardCheck, BsClipboardX } from "react-icons/bs";
-import Comment from "./Comment";
 import axios from "axios";
+import Comments from "./Comments";
+import ReactButton from "../ReactButton";
+import { URL_PREFIX } from "../../url_constants";
+import LikeDislike from "../Like_Dislike";
 
-const URL_TO_POST_COMMENT = 'http://localhost:11001/comments/';
-const URL_TO_GET_REACTIONS = 'http://localhost:11001/reactions/postId/';
-const URL_TO_POST_REACTIONS = 'http://localhost:11001/reactions/';
-const URL_TO_UPDATE_REACTIONS = 'http://localhost:11001/reactions/update/'
+const URL_TO_GET_REACTIONS = `${URL_PREFIX}/reactions/postId/`;
 
-async function retrieveReactionsOfPost(postId){
-  return axios.get(URL_TO_GET_REACTIONS+postId)
-          .then(response => response.data)
-          .catch(error => console.error(error))
+// Get the reactions for the given post and return them
+async function retrieveReactionsOfPost(postId) {
+  return axios
+    .get(URL_TO_GET_REACTIONS + postId)
+    .then((response) => response.data)
+    .catch((error) => console.error(error));
 }
 
-const Posts = (props) => {
+const PostItem = (props) => {
+  // time since post was created
   const [timeSince, setTimeSince] = useState("");
-  const [comments, setComments] = useState([]);
-  const [showComments, setShowComments] = useState();
-  const[wantsToPost, setWantsToPost] = useState(false);
-  const[commentContent, setCommentContent] = useState("");
-  const[reactions, setReactions] = useState();
+  const [, setReactions] = useState([]);
+  // amount of reactions for this post:
   const [reactionsCount, setReactionsCount] = useState({
     THUMBSUP: 0,
     THUMBSDOWN: 0,
@@ -30,25 +28,62 @@ const Posts = (props) => {
     SMILE: 0,
     FROWN: 0,
     ANGRY: 0,
-    HEART: 0
-  })
+    HEART: 0,
+  });
+
+  // update reaction count when a reaction is added:
+  const updateCount = (updatedReactions) => {
+    var tempReactionCount = {
+      THUMBSUP: 0,
+      THUMBSDOWN: 0,
+      LAUGH: 0,
+      CRY: 0,
+      SMILE: 0,
+      FROWN: 0,
+      ANGRY: 0,
+      HEART: 0,
+    };
+    for (var i = 0; i < updatedReactions.length; i++) {
+      tempReactionCount[updatedReactions[i].reaction]++;
+    }
+    // update state:
+    setReactionsCount(tempReactionCount);
+    setReactions(updatedReactions);
+  };
 
   useEffect(() => {
+    setReactions(props.data.reactionList);
 
+    // when component renders, count up reactions for this post:
+    var tempReactionCount = {
+      THUMBSUP: 0,
+      THUMBSDOWN: 0,
+      LAUGH: 0,
+      CRY: 0,
+      SMILE: 0,
+      FROWN: 0,
+      ANGRY: 0,
+      HEART: 0,
+    };
+    for (var i = 0; i < props.data.reactionList.length; i++) {
+      tempReactionCount[props.data.reactionList[i].reaction]++;
+    }
+    setReactionsCount(tempReactionCount);
+
+    // get the reactions for this post:
     const fetchReactions = async (postId) => {
       const result = await retrieveReactionsOfPost(postId);
       setReactions(result);
-
     };
-    fetchReactions(props.data.id)
-    let date = new Date(props.data.creationDate);
+    fetchReactions(props.data.id);
+    let date = new Date(props.data.creationDate + "Z");
 
+    // calculate time since post was created:
     const seconds = (Date.now() - date.getTime()) / 1000;
-    console.log(seconds);
     if (seconds < 60) {
       setTimeSince(Math.floor(seconds) + " secs ago");
     } else if (seconds < 3600) {
-      setTimeSince(Math.floor(seconds / 60) + " mins ago");
+      setTimeSince(Math.floor(seconds / 60) + " mints ago");
     } else if (seconds < 86400) {
       setTimeSince(Math.floor(seconds / 3600) + " hours ago");
     } else if (seconds < 604800) {
@@ -58,98 +93,9 @@ const Posts = (props) => {
     } else {
       setTimeSince(Math.floor(seconds / 2592000) + " months ago");
     }
-    if(props.data.commentList.length === 0){
-      setShowComments(false);
-    } else{
-      setShowComments(true);
-      setComments(props.data.commentList);
-    }
-    
+  }, [props.data]);
 
-  },[]);
-
-  const onShowCommentHandler = () => {
-    if (showComments === false) setShowComments(true);
-    else setShowComments(false);
-  };
-
-  const showCommentsHandler = (showComments) => {
-    switch (showComments) {
-      case true:
-        return (
-          <div className="row">
-            <div className="col-lg-10">
-              <h4>Comments</h4>
-              {comments.map((comment) => (
-                <Comment data={comment} />
-              ))}
-            </div>
-          </div>
-        );
-      case false:
-        return <></>;
-    }
-  };
-
-  const onPostCommentHandler = (postId) => {
-    const comment = {
-      description: commentContent,
-      date: Date.now(), 
-      author: 'user2'
-    }
-    console.log(comment)
-    axios.post((URL_TO_POST_COMMENT+postId), comment)
-    .then(response => console.log(response))
-    .catch(error => console.error(error));
-  }
-
-  const onCommentHandler = () => {
-    if (wantsToPost === false)
-      setWantsToPost(true);
-    else
-      setWantsToPost(false);
-  }
-
-  const loadCommentTemplate = (wantsToPost) => {
-    switch(wantsToPost){
-      case true:
-        return(
-          <div>
-            <textarea type="text" name="" id="" className="" width="100%" onChange={(e) => setCommentContent(e.target.value)}/>
-            <button className="btn btn-block" onClick={onPostCommentHandler.bind(this, props.data.id)}>submit</button>
-          </div>
-        )
-    }
-  }
-
-  const testFunction = (event) =>{
-    console.log(reactions)
-    console.log("post id: " + props.data.id)
-    console.log("user id: " + props.data.userId)
-
-    const reactionForCurrentUser = reactions.find(reaction => reaction.userId == props.data.userId);
-    console.log(reactionForCurrentUser)
-
-    const data = {
-      postId: props.data.id,
-      userId: props.data.userId,
-      reaction: event.target.firstChild.data
-    }
-    
-    if(reactionForCurrentUser == undefined){
-      axios.post((URL_TO_POST_REACTIONS+props.data.id), data)
-      .then(response => console.log(response))
-      .catch(error => console.error(error));
-    } 
-    else {
-      axios.put((URL_TO_UPDATE_REACTIONS+reactionForCurrentUser.reactionId), data)
-      .then(response => console.log(response))
-      .catch(error => console.error(error))
-
-    }
-
-  }
-
+  let prettyDate = new Date(props.data.creationDate);
   return (
     <div>
       <div className="card rounded">
@@ -166,6 +112,14 @@ const Posts = (props) => {
             <div className="col-sm-3">
               <div>{"user id: " + props.data.userId}</div>
               <div className="text-secondary">{timeSince}</div>
+              <p>
+                On {prettyDate.getMonth() + 1}/{prettyDate.getDate()}/
+                {prettyDate.getFullYear()} at {prettyDate.getHours()}:
+                {prettyDate.getMinutes() < 10
+                  ? "0" + prettyDate.getMinutes()
+                  : prettyDate.getMinutes()}
+                {prettyDate.getHours() < 12 ? "am" : "pm"}
+              </p>
             </div>
           </div>
         </div>
@@ -179,90 +133,28 @@ const Posts = (props) => {
             <br />
             <div className="row">
               <div className="col-sm-3">
-                <a
-                  className="btn btn-secondary btn-lg dropdown-toggle btn-block"
-                  data-toggle="dropdown"
-                  href="#"
-                  role="button"
-                >
-                  Reactions
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown" onClick={testFunction}>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">ُTHUMBSUP</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">THUMBSDOWN</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">LAUGH</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">CRY</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">SMILE</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">FROWN</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">ANGRY</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">HEART</span>
-                  </a>
+                <div>
+                  {props.data.id && (
+                    <ReactButton
+                      data={props.data}
+                      counts={reactionsCount}
+                      updateCount={updateCount}
+                    />
+                  )}
                 </div>
               </div>
-              <div className="col-sm-3">
-                <a
-                  className="btn btn-secondary btn-lg btn-block"
-                  href="#"
-                  role="button"
-                  onClick={onShowCommentHandler}
-                >
-                  Show Comment
-                </a>
-              </div>
-              <div className="col-sm-3">
-                <a
-                  className="btn btn-secondary btn-lg btn-block"
-                  href="#"
-                  role="button"
-                  onClick={onCommentHandler}
-                >
-                  Post Comment
-                </a>
-              </div>
-              <div className="col-sm-2 text-right">
-                <a className="btn btn-secondary btn-lg" href="#" role="button">
-                  <span>
-                    <BsClipboardCheck />
-                  </span>
-                </a>
-              </div>
-              <div className="col-sm-1 ">
-                <a className="btn btn-secondary btn-lg" href="#" role="button">
-                  <span>
-                    <BsClipboardX />
-                  </span>
-                </a>
-              </div>
+
+              {props.data.id && <LikeDislike data={props.data} />}
             </div>
             <br />
-            {showCommentsHandler(showComments)}
           </div>
+
+          {props.data.id && <Comments post={props.data} />}
         </div>
       </div>
-       {/* <button className="btn btn-block" onClick={onShowCommentHandler}>Post</button>  */}
       <br />
-      {
-        loadCommentTemplate(wantsToPost)
-      }
-
-      {/* <button className = "btn btn-block" onClick={testFunction}>Click me to test</button> */}
     </div>
   );
 };
 
-export default Posts;
+export default PostItem;

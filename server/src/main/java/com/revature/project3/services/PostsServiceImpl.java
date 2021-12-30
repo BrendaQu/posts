@@ -5,6 +5,7 @@ import com.revature.project3.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
@@ -31,5 +32,11 @@ public class PostsServiceImpl implements PostsService
     public void deletePost(long id)
     {
         postsRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public Post updatePost(Post post) {
+        return postsRepository.save(post);
     }
 }
