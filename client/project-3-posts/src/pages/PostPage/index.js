@@ -1,12 +1,14 @@
 import React from 'react'
-import ReactButton from '../../components/ReactButton/ReactButton'
-import ReactCounter from '../../components/ReactCounter/ReactCounter';
+import ReactButton from '../../components/ReactButton';
+import LikeDislike from '../../components/Like_Dislike';
+import ReactCounter from '../../components/ReactCounter';
 
 const PostPage = () => {
-    return(
+    return (
         <div>
             <ReactButton />
-            <ReactCounter />
+            {/* <ReactCounter />
+            <LikeDislike /> */}
         </div>
     )
 }

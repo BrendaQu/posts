@@ -27,8 +27,19 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public String deleteComment(@PathVariable("id") Long commentId) {
-        commentService.deleteComment(commentId);
-        return "comment deleted successfully";
+    public Comment deleteComment(@PathVariable("id") Long commentId) {
+        return commentService.deleteComment(commentId);
+
     }
+
+    @PostMapping("/reply/{id}")
+    public Comment reply(@PathVariable("id") Long postId, @RequestBody Comment reply) {
+        return commentService.reply(postId,reply);
+    }
+
+    @GetMapping("/reply/{id}")
+    public List<Comment> getReplies(@PathVariable("id") Long commentId) {
+        return commentService.getReplies(commentId);
+    }
+
 }

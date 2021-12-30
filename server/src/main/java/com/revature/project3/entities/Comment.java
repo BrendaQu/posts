@@ -7,13 +7,11 @@ import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,9 +29,14 @@ public class Comment implements Comparable<Comment> {
     // the user who created this comment:
     private String author;
 
+    // the id of the comment which this comment is a reply to
+    // this value will be null if it is it a top-level comment
+    // (no parent)
+    private Long parentComment;
+
 
     @Override
     public int compareTo(Comment other) {
-        return this.date.compareTo(other.getDate());
+        return other.getDate().compareTo(this.date);
     }
 }

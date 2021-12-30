@@ -1,8 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
 
+/* This comment is pretty simple... it
+// is an input box with a submit button
+// that sends the comment to the database when
+// submitted. */
 const AddComment = (props) => {
 
+    // used to store the comment value:
     const [comment, setComment] = useState('');
 
     // update the state with the comment that
@@ -26,7 +31,7 @@ const AddComment = (props) => {
             date: Date.now()
         })
         // update the comments component:
-        .then(response => props.setComments([...props.comments, response.data]))
+        .then(response => props.setComments([response.data, ...props.comments]))
         .catch(error => console.error(error));
         // reset the input field to be empty:
         setComment("");
