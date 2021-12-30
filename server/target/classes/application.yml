@@ -1,0 +1,9 @@
+server:
+  port: 11001
+
+
+spring:
+  application:
+    name: POST-SERVICE
+  config:
+    import: optional:configserver:http://localhost:9296

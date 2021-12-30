@@ -45,4 +45,10 @@ public class PostFeedServiceImpl implements PostFeedService{
     public List<Post> getAllPostsContaining(String searchString) {
         return feedRepository.findByContentContaining(searchString);
     }
+
+    @Override
+    public void deletePost(long id)
+    {
+        feedRepository.deleteById(id);
+    }
 }

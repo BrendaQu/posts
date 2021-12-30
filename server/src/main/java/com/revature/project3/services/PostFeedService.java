@@ -15,4 +15,5 @@ public interface PostFeedService {
     public List<Post> getAllPostsBefore(LocalDateTime bench);
     public List<Post> getAllPostsAfter(LocalDateTime bench);
     public List<Post> getAllPostsContaining(String searchString);
+    public void deletePost(long id);
 }

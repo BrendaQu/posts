@@ -1,6 +1,6 @@
 package com.revature.project3.utils;
 
-public enum ReactionsEnum {
+public enum ReactionsEnum{
     THUMBSUP,
     THUMBSDOWN,
     LAUGH,
