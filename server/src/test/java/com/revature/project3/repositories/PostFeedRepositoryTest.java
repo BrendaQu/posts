@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -42,7 +43,7 @@ class PostFeedRepositoryTest {
     @Transactional
     @Test
     public void getPostsByDateBeforeTest(){
-        Date rightnow = new Date();
+        LocalDateTime rightnow = LocalDateTime.now();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         System.out.println(formatter.format(rightnow));
         List<Post> posts = feedRepository.findByDateBefore(rightnow); //Get all the dates before now, which should be all
@@ -52,7 +53,7 @@ class PostFeedRepositoryTest {
     @Transactional
     @Test
     public void getPostsByDateAfterTest(){
-        Date rightnow = new Date();
+        LocalDateTime rightnow = LocalDateTime.now();
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         System.out.println(formatter.format(rightnow));
         List<Post> posts = feedRepository.findByDateAfter(rightnow); //Get all the dates after now, which should be empty.

@@ -5,6 +5,7 @@ import com.revature.project3.repositories.PostFeedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -31,12 +32,12 @@ public class PostFeedServiceImpl implements PostFeedService{
     }
 
     @Override
-    public List<Post> getAllPostsBefore(Date bench) {
+    public List<Post> getAllPostsBefore(LocalDateTime bench) {
         return feedRepository.findByDateBefore(bench);
     }
 
     @Override
-    public List<Post> getAllPostsAfter(Date bench) {
+    public List<Post> getAllPostsAfter(LocalDateTime bench) {
         return feedRepository.findByDateAfter(bench);
     }
 
