@@ -1,14 +1,17 @@
-import './App.css';
-import PostPage from './pages/PostPage';
-import PostFeed from './components/PostFeed';
-import CommentTest from './components/CommentTest/';
+
+import CreatePost from './components/CreatePost';
+// import RetrievePosts from './components/RetrievePosts';
+import Feed from './components/Feed'
+
 
 function App() {
   return (
-    <div className="App">
-      <PostPage/>
-      <PostFeed />
-      <CommentTest/>
+    <div className="container">
+      <br />
+      <CreatePost />
+      <br />
+      {/* <RetrievePosts /> */}
+      <Feed />
     </div>
   );
 }
