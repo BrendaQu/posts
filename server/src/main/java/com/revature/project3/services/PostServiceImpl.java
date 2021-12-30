@@ -1,6 +1,5 @@
 package com.revature.project3.services;
 
-import com.netflix.discovery.converters.Auto;
 import com.revature.project3.entities.Post;
 import com.revature.project3.repositories.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;

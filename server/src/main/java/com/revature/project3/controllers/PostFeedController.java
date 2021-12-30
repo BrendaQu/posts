@@ -3,8 +3,11 @@ package com.revature.project3.controllers;
 import com.revature.project3.entities.Post;
 import com.revature.project3.services.PostFeedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +38,14 @@ public class PostFeedController {
     }
 
     @GetMapping("/postfeed/datesearch/before/{date}")
-    public List<Post> getPostsByDateBefore(@PathVariable("date") Date benchmark){
+    public List<Post> getPostsByDateBefore(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime benchmark){
+
         return feedService.getAllPostsBefore(benchmark);
     }
 
     @GetMapping("/postfeed/datesearch/after/{date}")
-    public List<Post> getPostsByDateAfter(@PathVariable("date") Date benchmark){
+    public List<Post> getPostsByDateAfter(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime benchmark){
+        //System.out.println(benchmark);
         return feedService.getAllPostsAfter(benchmark);
     }
 }

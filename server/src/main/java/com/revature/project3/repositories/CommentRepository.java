@@ -9,4 +9,6 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+    // return all replies to parent comment:
+    public List<Comment> findByParentComment(Long parentCommentId);
 }

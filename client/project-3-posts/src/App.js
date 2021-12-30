@@ -1,6 +1,4 @@
 import './App.css';
-import PostPage from './pages/PostPage';
-import PostFeed from './components/PostFeed';
 import CommentTest from './components/CommentTest/';
 
 function App() {
@@ -9,6 +7,9 @@ function App() {
       <PostPage/>
       {/* <PostFeed />
       <CommentTest/> */}
+      {/* <PostPage/>
+      <PostFeed /> */}
+      <CommentTest/>
     </div>
   );
 }
