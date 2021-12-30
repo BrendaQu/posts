@@ -5,6 +5,9 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 /*
+    This component holds all comments for a given post.
+    It takes in a post object as a prop... mostly for the id
+    so when we add a new comment, it knows which post to associate it with.
     Example:
     <Comments post = {post}/>
 */
@@ -22,9 +25,9 @@ const Comments = (props) => {
     }, [])
     
     return (
-        <div>
-            {comments.map(comment => <Comment comment={comment} comments = {comments} setComments = {setComments} key={comment.id}/>)}
+        <div style = {{border: 'solid', width: '75%', margin: 'auto', textAlign: 'left', padding: '10px'}}>
             <AddComment postId = {props.post.id} comments = {comments} setComments = {setComments}/>
+            {comments.map(comment => <Comment  postId = {props.post.id} comment={comment} comments = {comments} setComments = {setComments} key={comment.id}/>)}
         </div>
     )
 }

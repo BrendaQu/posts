@@ -87,15 +87,25 @@ public class CommentServiceTest {
         Comment comment_db = commentService.addComment(comment, postId);
         Long commentIdToDelete = comment_db.getId();
         assertNotNull(commentIdToDelete);
-        commentService.deleteComment(commentIdToDelete);
-        try {
-            Comment phantomComment = commentService.findById(commentIdToDelete);
-        } catch (Exception e) {
-            // make sure we can't retrieve this item:
-            assertEquals(JpaObjectRetrievalFailureException.class, e.getClass());
-        }
-        
+        Comment deletedComment = commentService.deleteComment(commentIdToDelete);
+        assertEquals("Comment was deleted.", deletedComment.getDescription());
 
+    }
+
+    @Test
+    @Transactional
+    void testReplyComment() {
+        Comment comment = new Comment();
+        comment.setDescription("Parent comment");
+        comment.setDate(new Date());
+        comment.setAuthor("Mom");
+        Comment comment_db = commentService.addComment(comment, postId);
+        Comment commentChild = new Comment();
+        commentChild.setDescription("Child comment 1");
+        commentChild.setDate(new Date());
+        commentService.reply(postId, commentChild);
+        List<Comment> children = commentService.getReplies(comment_db.getId());
+        assertEquals(1,children.size());
     }
 
 }

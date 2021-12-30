@@ -35,7 +35,7 @@ public class Post {
     @JoinColumn(name = "post_comments")
     private List<Comment> commentList;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @OneToMany(cascade = CascadeType.MERGE)
     @JoinColumn(name = "post_reactions")
     private List<Reaction> reactionList;
     // private List<Tag> tagList;

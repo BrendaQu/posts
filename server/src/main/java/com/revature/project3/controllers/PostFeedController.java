@@ -39,6 +39,7 @@ public class PostFeedController {
 
     @GetMapping("/postfeed/datesearch/before/{date}")
     public List<Post> getPostsByDateBefore(@PathVariable("date") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime benchmark){
+
         return feedService.getAllPostsBefore(benchmark);
     }
 
