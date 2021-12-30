@@ -4,6 +4,9 @@ import CommentTest from './components/CommentTest/';
 function App() {
   return (
     <div className="App">
+      <PostPage/>
+      {/* <PostFeed />
+      <CommentTest/> */}
       {/* <PostPage/>
       <PostFeed /> */}
       <CommentTest/>
