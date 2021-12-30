@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import MiniPost from './MiniPost';
 import Post from './Post';
+import PostItem from '../PostItem';
 
 const PostFeed = () => {
 
@@ -246,6 +247,7 @@ const PostFeed = () => {
     ///////////////////////////
     return (
         <>
+            
             <form className="text-center mb-4" onSubmit={searchSubmitHandler}>
                 <input className="w-50" type="text" onChange={searchChangeHandler} placeholder="Search for a post..." name="searchbar" />
                 <button type="submit">Go!</button>
@@ -294,11 +296,13 @@ const PostFeed = () => {
             <button onClick={() => filterByTimeAgo(365)}>Last Year</button>
             <div className="container d-flex justify-content-center">
                 {posts.length === 0 ?
+                
 
                     <h1> It's quiet in here. Make a post!</h1>
 
                     :
                     <div className="">
+                        {/* <PostItem data = {posts[0]}/> */}
                         <ul>
                         {
                             posts.map(post => {

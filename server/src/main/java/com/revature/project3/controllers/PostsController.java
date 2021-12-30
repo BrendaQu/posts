@@ -26,4 +26,9 @@ public class PostsController
         service.deletePost(id);
         return "post deleted successfully";
     }
+
+    @PutMapping("/posts")
+    public Post updatePost(@RequestBody Post post) {
+        return service.updatePost(post);
+    }
 }

@@ -25,7 +25,7 @@ const Comments = (props) => {
     }, [])
     
     return (
-        <div style = {{border: 'solid', width: '75%', margin: 'auto', textAlign: 'left', padding: '10px'}}>
+        <div style = {{ margin: 'auto', textAlign: 'left', padding: '10px'}}>
             <AddComment postId = {props.post.id} comments = {comments} setComments = {setComments}/>
             {comments.map(comment => <Comment  postId = {props.post.id} comment={comment} comments = {comments} setComments = {setComments} key={comment.id}/>)}
         </div>

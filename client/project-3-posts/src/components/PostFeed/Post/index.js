@@ -1,27 +1,14 @@
 import React, { useEffect, useState } from "react";
 import "./style.css";
 import { BsClipboardCheck, BsClipboardX } from "react-icons/bs";
-import Comment from "./Comment";
+import ReactButton from "../../ReactButton";
+import LikeDislike from "../../Like_Dislike";
 import axios from "axios";
-
-const URL_TO_POST_COMMENT = 'http://localhost:11001/comments/';
-const URL_TO_GET_REACTIONS = 'http://localhost:11001/reactions/postId/';
-const URL_TO_POST_REACTIONS = 'http://localhost:11001/reactions/';
-const URL_TO_UPDATE_REACTIONS = 'http://localhost:11001/reactions/update/'
-
-async function retrieveReactionsOfPost(postId){
-  return axios.get(URL_TO_GET_REACTIONS+postId)
-          .then(response => response.data)
-          .catch(error => console.error(error))
-}
 
 const Posts = (props) => {
   const [timeSince, setTimeSince] = useState("");
   const [comments, setComments] = useState([]);
   const [showComments, setShowComments] = useState();
-  const[wantsToPost, setWantsToPost] = useState(false);
-  const[commentContent, setCommentContent] = useState("");
-  const[reactions, setReactions] = useState([]);
   const [reactionsCount, setReactionsCount] = useState({
     THUMBSUP: 0,
     THUMBSDOWN: 0,
@@ -33,14 +20,33 @@ const Posts = (props) => {
     HEART: 0
   })
 
+  const updateCount = (reaction, count) => {
+    console.log(reaction);
+    var temp = reactionsCount;
+    temp[reaction] = count;
+    console.log('temp:')
+    console.log(temp);
+    setReactionsCount(temp);
+  }
+  
+
   useEffect(() => {
 
-    const fetchReactions = async (postId) => {
-      const result = await retrieveReactionsOfPost(postId);
-      setReactions(result);
+    var tempReactionCount = {
+      THUMBSUP: 0,
+      THUMBSDOWN: 0,
+      LAUGH: 0,
+      CRY: 0,
+      SMILE: 0,
+      FROWN: 0,
+      ANGRY: 0,
+      HEART: 0
+    }
+    for (var i = 0; i < props.data.reactionList.length; i++) {
+      tempReactionCount[props.data.reactionList[i].reaction]++;
+    }
+    setReactionsCount(tempReactionCount);
 
-    };
-    fetchReactions(props.data.id)
     let date = new Date(props.data.creationDate + 'Z');
 
     const seconds = (Date.now() - date.getTime()) / 1000;
@@ -67,91 +73,61 @@ const Posts = (props) => {
 
   },[]);
 
-  const onShowCommentHandler = () => {
-    if (showComments === false) setShowComments(true);
-    else setShowComments(false);
-  };
+  // const onShowCommentHandler = () => {
+  //   if (showComments === false) setShowComments(true);
+  //   else setShowComments(false);
+  // };
 
-  const showCommentsHandler = (showComments) => {
-    switch (showComments) {
-      case true:
-        return (
-          <div className="row">
-            <div className="col-lg-10">
-              <h4>Comments</h4>
-              {comments.map((comment) => (
-                <Comment data={comment} />
-              ))}
-            </div>
-          </div>
-        );
-      case false:
-        return <></>;
-    }
-  };
+  // const showCommentsHandler = (showComments) => {
+  //   switch (showComments) {
+  //     case true:
+  //       return (
+  //         <div className="row">
+  //           <div className="col-lg-10">
+  //             <h4>Comments</h4>
+  //             {comments.map((comment) => (
+  //               <Comment data={comment} />
+  //             ))}
+  //           </div>
+  //         </div>
+  //       );
+  //     case false:
+  //       return <></>;
+  //   }
+  // };
 
-  const onPostCommentHandler = (postId) => {
-    const comment = {
-      description: commentContent,
-      date: Date.now(), 
-      author: 'user2'
-    }
-    console.log(comment)
-    axios.post((URL_TO_POST_COMMENT+postId), comment)
-    .then(response => console.log(response))
-    .catch(error => console.error(error));
-  }
+  // const onPostCommentHandler = (postId) => {
+  //   const comment = {
+  //     description: commentContent,
+  //     date: Date.now(), 
+  //     author: 'user2'
+  //   }
+  //   console.log(comment)
+  //   axios.post((URL_TO_POST_COMMENT+postId), comment)
+  //   .then(response => console.log(response))
+  //   .catch(error => console.error(error));
+  // }
 
-  const onCommentHandler = () => {
-    if (wantsToPost === false)
-      setWantsToPost(true);
-    else
-      setWantsToPost(false);
-  }
+  // const onCommentHandler = () => {
+  //   if (wantsToPost === false)
+  //     setWantsToPost(true);
+  //   else
+  //     setWantsToPost(false);
+  // }
 
-  const loadCommentTemplate = (wantsToPost) => {
-    switch(wantsToPost){
-      case true:
-        return(
-          <div>
-            <textarea type="text" name="" id="" className="" width="100%" onChange={(e) => setCommentContent(e.target.value)}/>
-            <button className="btn btn-block" onClick={onPostCommentHandler.bind(this, props.data.id)}>submit</button>
-          </div>
-        )
-    }
-  }
+  // const loadCommentTemplate = (wantsToPost) => {
+  //   switch(wantsToPost){
+  //     case true:
+  //       return(
+  //         <div>
+  //           <textarea type="text" name="" id="" className="" width="100%" onChange={(e) => setCommentContent(e.target.value)}/>
+  //           <button className="btn btn-block" onClick={onPostCommentHandler.bind(this, props.data.id)}>submit</button>
+  //         </div>
+  //       )
+  //   }
+  // }
 
-  const testFunction = (event) =>{
-    console.log(reactions)
-    console.log("post id: " + props.data.id)
-    console.log("user id: " + props.data.userId)
-
-    const reactionForCurrentUser = reactions.find(reaction => reaction.userId == props.data.userId);
-    console.log(reactionForCurrentUser)
-
-    const data = {
-      postId: props.data.id,
-      userId: props.data.userId,
-      reaction: event.target.firstChild.data
-    }
-    
-    if(reactionForCurrentUser === undefined){
-      axios.post((URL_TO_POST_REACTIONS+props.data.id), data)
-      .then(response => {
-        console.log(response)
-        setReactions([...reactions, response.data]);
-      })
-      .catch(error => console.error(error));
-    } 
-    else {
-      axios.put((URL_TO_UPDATE_REACTIONS+reactionForCurrentUser.reactionId), data)
-      .then(response => console.log(response))
-      .catch(error => console.error(error))
-
-    }
-
-  }
-
+  
   return (
     <div>
       <div className="card rounded">
@@ -181,42 +157,11 @@ const Posts = (props) => {
             <br />
             <div className="row">
               <div className="col-sm-3">
-                <a
-                  className="btn btn-secondary btn-lg dropdown-toggle btn-block"
-                  data-toggle="dropdown"
-                  href="#"
-                  role="button"
-                >
-                  Reactions
-                </a>
-                <div className="dropdown-menu" aria-labelledby="navbarDropdown" onClick={testFunction}>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">ُTHUMBSUP</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">THUMBSDOWN</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">LAUGH</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">CRY</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">SMILE</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">FROWN</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">ANGRY</span>
-                  </a>
-                  <a className="dropdown-item">
-                    <span className="icon nav-link">HEART</span>
-                  </a>
+                <div>
+                  <ReactButton data = {props.data} counts = {reactionsCount} updateCount = {updateCount}/>
                 </div>
               </div>
-              <div className="col-sm-3">
+              {/* <div className="col-sm-3">
                 <a
                   className="btn btn-secondary btn-lg btn-block"
                   href="#"
@@ -235,32 +180,24 @@ const Posts = (props) => {
                 >
                   Post Comment
                 </a>
-              </div>
-              <div className="col-sm-2 text-right">
-                <a className="btn btn-secondary btn-lg" href="#" role="button">
-                  <span>
-                    <BsClipboardCheck />
-                  </span>
+              </div> */}
+              {/* TODO: Route this to post item component: */}
+              <div className="col-sm-3">
+                <a
+                  className="btn btn-secondary btn-lg btn-block"
+                  role="button"
+                >
+                  View Full Post
                 </a>
               </div>
-              <div className="col-sm-1 ">
-                <a className="btn btn-secondary btn-lg" href="#" role="button">
-                  <span>
-                    <BsClipboardX />
-                  </span>
-                </a>
-              </div>
+              <LikeDislike data={props.data} />
             </div>
             <br />
-            {showCommentsHandler(showComments)}
           </div>
         </div>
       </div>
        {/* <button className="btn btn-block" onClick={onShowCommentHandler}>Post</button>  */}
       <br />
-      {
-        loadCommentTemplate(wantsToPost)
-      }
 
       {/* <button className = "btn btn-block" onClick={testFunction}>Click me to test</button> */}
     </div>

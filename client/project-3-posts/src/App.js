@@ -3,7 +3,6 @@ import CreatePost from './components/CreatePost';
 import Feed from './components/Feed';
 import PostFeed from './components/PostFeed';
 import './App.css';
-import CommentTest from './components/CommentTest/';
 import PostPage from './pages/PostPage';
 
 
@@ -21,7 +20,6 @@ function App() {
       <CommentTest/> */}
       {/* <PostPage/>
       <PostFeed /> */}
-      <CommentTest/>
     </div>
   );
 }
