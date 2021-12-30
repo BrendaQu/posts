@@ -17,11 +17,16 @@ const CreatePost = () => {
 
     const onPostHandler = () => {
 
+        var date = new Date(Date.now());
+        console.log(date.toISOString());
+
         const postDetails = {
             userId: postUser,
             title: postTitle,
             description: postDescription,
-            creationDate: Date.now()
+            creationDate: date.toISOString(),
+            downmints: 0,
+            upmints: 0,
         }
 
         axios.post(URL_TO_POST, postDetails)
@@ -51,17 +56,19 @@ const CreatePost = () => {
       </div>
       <div className="card-body">
         <div className="jumbotron bg-light border">
-          <input type="text" name="" id="" placeholder="enter the title of the mintost:" style={{width:"100%", fontSize:"1.6em", padding:"0.4em"}}onChange={(event) => setPostTitle(event.target.value)}/>
-          <hr className="my-4" />
-          <div className="border content-box">
-            <textarea name="" id="" style={{width: "100%", padding:"0.75em", fontSize: "1.2em"}} rows="10" placeholder="Enter the content of your mintost" onChange={(event) => setPostDescription(event.target.value)}></textarea>
-          </div>
-          <br />
-          <div className="row">
-            <div className="col-sm-3">
-              <button onClick={onPostHandler}>Post</button>
+          <form onSubmit = {onPostHandler}>
+            <input type="text" name="" id="" placeholder="enter the title of the mintost:" style={{width:"100%", fontSize:"1.6em", padding:"0.4em"}}onChange={(event) => setPostTitle(event.target.value)}/>
+            <hr className="my-4" />
+            <div className="border content-box">
+              <textarea name="" id="" style={{width: "100%", padding:"0.75em", fontSize: "1.2em"}} rows="10" placeholder="Enter the content of your mintost" onChange={(event) => setPostDescription(event.target.value)}></textarea>
             </div>
-          </div>
+            <br />
+            <div className="row">
+              <div className="col-sm-3">
+                <button type = 'submit'>Post</button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>

@@ -42,10 +42,8 @@ const Posts = (props) => {
     };
     fetchReactions(props.data.id)
     let date = new Date(props.data.creationDate + 'Z');
-    console.log("Creation date: " + props.data.creationDate);
 
     const seconds = (Date.now() - date.getTime()) / 1000;
-    console.log(seconds);
     if (seconds < 60) {
       setTimeSince(Math.floor(seconds) + " secs ago");
     } else if (seconds < 3600) {

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import MiniPost from './MiniPost';
+import Post from './Post';
 
 const PostFeed = () => {
 
@@ -292,19 +293,16 @@ const PostFeed = () => {
             <button onClick={() => filterByTimeAgo(20)}>Last Month</button>
             <button onClick={() => filterByTimeAgo(365)}>Last Year</button>
             <div className="container d-flex justify-content-center">
-
                 {posts.length === 0 ?
 
                     <h1> It's quiet in here. Make a post!</h1>
 
                     :
                     <div className="">
-                        <ul className="list-group">
+                        <ul>
                         {
                             posts.map(post => {
-                                return <li className='' key={post.id}>
-                                    <MiniPost data={post} />
-                                </li>
+                                return <li key = {post.id}> <Post data={post} /></li>
                             })
                         }
                         </ul>

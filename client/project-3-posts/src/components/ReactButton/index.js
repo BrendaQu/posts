@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { ReactionBarSelector } from '@charkour/react-reactions'
 import axios from 'axios'
 
 

@@ -1,8 +1,10 @@
 import CreatePost from './components/CreatePost';
 // import RetrievePosts from './components/RetrievePosts';
-import Feed from './components/Feed'
+import Feed from './components/Feed';
+import PostFeed from './components/PostFeed';
 import './App.css';
 import CommentTest from './components/CommentTest/';
+import PostPage from './pages/PostPage';
 
 
 function App() {
@@ -12,7 +14,8 @@ function App() {
       <CreatePost />
       <br />
       {/* <RetrievePosts /> */}
-      <Feed />
+      {/* <Feed /> */}
+      <PostFeed />
       <PostPage/>
       {/* <PostFeed />
       <CommentTest/> */}

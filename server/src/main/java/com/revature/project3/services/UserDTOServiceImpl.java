@@ -5,10 +5,14 @@ import com.revature.project3.dto.UserPostResponse;
 import com.revature.project3.entities.Post;
 import com.revature.project3.repositories.PostFeedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+@Service
 public class UserDTOServiceImpl implements UserDTOService{
     @Autowired
     private PostFeedRepository postFeedRepository;
