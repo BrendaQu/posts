@@ -5,9 +5,7 @@ import com.revature.project3.entities.Post;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ public class CommentServiceTest {
     private CommentService commentService;
 
     @Autowired
-    private PostService postService;
+    private PostsService postsService;
 
     private Long postId;
 
@@ -32,7 +30,7 @@ public class CommentServiceTest {
         Post post = new Post();
         post.setDescription("New Post");
         post.setCommentList(new ArrayList<>());
-        Post post_db = postService.addPost(post);
+        Post post_db = postsService.addPost(post);
         postId = post_db.getId();
         return;
     }
