@@ -5,15 +5,17 @@ import com.revature.project3.services.ReactionsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/reactions")
 public class ReactionsController {
     @Autowired
     private ReactionsServiceImpl reactionsService;
 
-    @PostMapping()
-    public Reaction saveReaction(@RequestBody Reaction reaction){
-        return reactionsService.addReaction(reaction);
+    @PostMapping("/{id}")
+    public Reaction saveReaction(@RequestBody Reaction reaction, @PathVariable("id") Long postId){
+        return reactionsService.addReaction(reaction, postId);
     }
 
     @GetMapping("/reactionId/{id}")
@@ -22,7 +24,7 @@ public class ReactionsController {
     }
 
     @GetMapping("/postId/{id}")
-    public Reaction getReactionByPostId(@PathVariable("id") Long reactionId){
+    public List<Reaction> getReactionByPostId(@PathVariable("id") Long reactionId){
         return reactionsService.getReactionByPostId(reactionId);
     }
 
@@ -32,7 +34,8 @@ public class ReactionsController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public void deleteReaction(@PathVariable("id") Long reactionId){
+    public String deleteReaction(@PathVariable("id") Long reactionId){
         reactionsService.deleteReaction(reactionId);
+        return "reaction deleted successfully";
     }
 }

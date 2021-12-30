@@ -20,7 +20,7 @@ import java.util.List;
 @ToString
 public class Comment implements Comparable<Comment> {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String description;
     // data when this comment was posted:

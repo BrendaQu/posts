@@ -1,9 +1,11 @@
 package com.revature.project3.entities;
 
+import com.revature.project3.utils.ReactionsEnum;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
 
@@ -19,19 +21,18 @@ public class Reaction {
     @Column(name = "reaction_id")
     private Long reactionId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "post_id")
+    //@ManyToOne(cascade = CascadeType.MERGE)
+    //@JoinColumn(name = "reactions_post")
     private Long postId;
 
 //    @ManyToOne
 //    @JoinColumn(name = "comment_id")
 //    private Long commentId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
+
+//    @ManyToOne(cascade = CascadeType.MERGE)
+//    @JoinColumn(name = "reactions_user")
     private Long userId;
 
-    private int reaction;
-
-   
+    private ReactionsEnum reaction;
 }
