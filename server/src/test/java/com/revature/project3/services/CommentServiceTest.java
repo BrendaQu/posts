@@ -3,6 +3,7 @@ package com.revature.project3.services;
 import com.revature.project3.entities.Comment;
 import com.revature.project3.entities.Post;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,6 +31,8 @@ public class CommentServiceTest {
         Post post = new Post();
         post.setDescription("New Post");
         post.setCommentList(new ArrayList<>());
+        post.setDownmints(0L);
+        post.setUpmints(0L);
         Post post_db = postsService.addPost(post);
         postId = post_db.getId();
         return;
@@ -90,6 +93,7 @@ public class CommentServiceTest {
 
     }
 
+    @Disabled
     @Test
     @Transactional
     void testReplyComment() {
@@ -101,9 +105,9 @@ public class CommentServiceTest {
         Comment commentChild = new Comment();
         commentChild.setDescription("Child comment 1");
         commentChild.setDate(new Date());
+        System.out.println(postId);
         commentService.reply(postId, commentChild);
         List<Comment> children = commentService.getReplies(comment_db.getId());
         assertEquals(1,children.size());
     }
-
 }

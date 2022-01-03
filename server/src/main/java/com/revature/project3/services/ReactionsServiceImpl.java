@@ -40,7 +40,6 @@ public class ReactionsServiceImpl implements ReactionsService {
     @Override
     public List<Reaction> getReactionByPostId(Long postId) {
         return postRepository.getById(postId).getReactionList();
-//        return null;
     }
 
     @Override
@@ -51,8 +50,8 @@ public class ReactionsServiceImpl implements ReactionsService {
     }
 
     @Override
-    public void deleteReaction(Long reactionId) {
+    public String deleteReaction(Long reactionId) {
         repository.deleteById(reactionId);
-        //return ("Entry Successfully Deleted");
+        return ("Entry Successfully Deleted");
     }
 }

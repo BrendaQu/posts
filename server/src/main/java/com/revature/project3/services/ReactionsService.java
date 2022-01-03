@@ -11,5 +11,5 @@ public interface ReactionsService {
     Reaction getReactionByReactionId(Long reactionId);
     List<Reaction> getReactionByPostId(Long postId);
     Reaction updateReaction(Reaction reaction, Long reactionId);
-    void deleteReaction(Long reactionId);
+    String deleteReaction(Long reactionId);
 }

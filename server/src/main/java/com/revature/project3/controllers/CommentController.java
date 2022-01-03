@@ -17,7 +17,6 @@ public class CommentController {
 
     @PostMapping("/{id}")
     public Comment addComment(@RequestBody Comment comment, @PathVariable("id") Long postId) {
-        System.out.println(comment.getDate());
         return commentService.addComment(comment, postId);
     }
 

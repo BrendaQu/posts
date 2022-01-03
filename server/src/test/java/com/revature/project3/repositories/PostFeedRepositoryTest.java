@@ -44,8 +44,6 @@ class PostFeedRepositoryTest {
     @Test
     public void getPostsByDateBeforeTest(){
         LocalDateTime rightnow = LocalDateTime.now();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        System.out.println(formatter.format(rightnow));
         List<Post> posts = feedRepository.findByDateBefore(rightnow); //Get all the dates before now, which should be all
         System.out.println(posts);
     }
@@ -54,8 +52,6 @@ class PostFeedRepositoryTest {
     @Test
     public void getPostsByDateAfterTest(){
         LocalDateTime rightnow = LocalDateTime.now();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        System.out.println(formatter.format(rightnow));
         List<Post> posts = feedRepository.findByDateAfter(rightnow); //Get all the dates after now, which should be empty.
         System.out.println(posts);
     }
