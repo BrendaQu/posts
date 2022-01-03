@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import ReactButton from "../../ReactButton";
 import LikeDislike from "../../Like_Dislike";
+import {Link} from "react-router-dom";
 
 const FeedItem = (props) => {
   // time since the post was made:
@@ -115,11 +116,12 @@ const FeedItem = (props) => {
               </div>
               {/* TODO: Route this to post item component: */}
               <div className="col-sm-3">
-                <button
+                <Link
                   className="btn btn-secondary btn-lg btn-block"
+                  to = {`/post/${props.data.id}`}
                 >
                   View Full Post
-                </button>
+                </Link>
               </div>
               <LikeDislike data={props.data} />
             </div>
